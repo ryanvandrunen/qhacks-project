@@ -2,62 +2,62 @@ import React, { useState } from 'react';
 import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
 
 const tagContainerStyle = {
-    display: 'flex',
-    gap: '2px',
-    flexWrap: 'wrap',
-    maxWidth: '100%', /* Set the maximum width as needed */
-    overflow: 'hidden',
-  };
-  
-  const cardTagStyle = {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  };
-  
-  const modalTagContainerStyle = {
-    display: 'flex',
-    gap: '2px',
-    flexWrap: 'wrap',
-    maxWidth: '100%', /* Set the maximum width as needed */
-    overflow: 'hidden',
-  };
-  
-  const modalTagStyle = {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  };
-  
+  display: 'flex',
+  gap: '2px',
+  flexWrap: 'wrap',
+  maxWidth: '100%', /* Set the maximum width as needed */
+  overflow: 'hidden',
+};
+
+const cardTagStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+};
+
+const modalTagContainerStyle = {
+  display: 'flex',
+  gap: '2px',
+  flexWrap: 'wrap',
+  maxWidth: '100%', /* Set the maximum width as needed */
+  overflow: 'hidden',
+};
+
+const modalTagStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+};
+
 
 const tagContainerStyle = {
-    display: 'flex',
-    gap: '2px',
-    flexWrap: 'wrap',
-    maxWidth: '100%', /* Set the maximum width as needed */
-    overflow: 'hidden',
-  };
-  
-  const cardTagStyle = {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  };
-  
-  const modalTagContainerStyle = {
-    display: 'flex',
-    gap: '2px',
-    flexWrap: 'wrap',
-    maxWidth: '100%', /* Set the maximum width as needed */
-    overflow: 'hidden',
-  };
-  
-  const modalTagStyle = {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  };
-  
+  display: 'flex',
+  gap: '2px',
+  flexWrap: 'wrap',
+  maxWidth: '100%', /* Set the maximum width as needed */
+  overflow: 'hidden',
+};
+
+const cardTagStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+};
+
+const modalTagContainerStyle = {
+  display: 'flex',
+  gap: '2px',
+  flexWrap: 'wrap',
+  maxWidth: '100%', /* Set the maximum width as needed */
+  overflow: 'hidden',
+};
+
+const modalTagStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+};
+
 
 export default function RecipeCard(props) {
   const [modalContent, setModalContent] = useState({
@@ -97,20 +97,20 @@ export default function RecipeCard(props) {
           {props.tags && props.tags.split(',').length > 0 && (
             // <div className="d-flex gap-2">
             <div style={tagContainerStyle}>
-              {props.tags.split(',').slice(0,5).map((tag, index) => (
+              {props.tags.split(',').slice(0, 5).map((tag, index) => (
                 <Badge key={tag} bg="dark">
                   {tag.trim()}
                 </Badge>
               ))}
               {props.tags.split(',').length > 5 && (
-              <Badge bg="dark" style={cardTagStyle}>
-                +{props.tags.split(',').length - 5} more
-              </Badge>
+                <Badge bg="dark" style={cardTagStyle}>
+                  +{props.tags.split(',').length - 5} more
+                </Badge>
               )}
             </div>
           )}
           <Button className="btn btn-primary mt-auto" onClick={handleModalOpen}>
-            More Information
+            View Recipe
           </Button>
         </Card.Body>
       </Card>
@@ -129,19 +129,19 @@ export default function RecipeCard(props) {
           <h6>Instructions:</h6>
           <p className="card-text">{modalContent.instructions}</p>
           <div style={modalTagContainerStyle}>
-      {modalContent.tags && modalContent.tags.split(',').length > 0 ? (
-        modalContent.tags.split(',').slice(0,12).map((tag, index) => (
-          <Badge key={index} bg="dark" style={modalTagStyle}>
-            {tag.trim()}
-          </Badge>
-        ))
-      ) : (
-        <span>No tags available</span>
-      )}
-      {modalContent.tags.split(',').length > 12 && (
-            <Badge bg="dark" style={modalTagStyle}>
+            {modalContent.tags && modalContent.tags.split(',').length > 0 ? (
+              modalContent.tags.split(',').slice(0, 12).map((tag, index) => (
+                <Badge key={index} bg="dark" style={modalTagStyle}>
+                  {tag.trim()}
+                </Badge>
+              ))
+            ) : (
+              <span>No tags available</span>
+            )}
+            {modalContent.tags.split(',').length > 12 && (
+              <Badge bg="dark" style={modalTagStyle}>
                 +{modalContent.tags.split(',').length - 12} more
-            </Badge>
+              </Badge>
             )}
           </div>
         </Modal.Body>
