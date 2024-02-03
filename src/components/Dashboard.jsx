@@ -28,7 +28,6 @@ export default function Dashboard() {
         const fetchData = async () => {
           const newData = await fetchRecipes();
           setRecipes(newData);
-          console.log(newData)
         };
     
         fetchData();

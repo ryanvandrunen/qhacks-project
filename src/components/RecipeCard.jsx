@@ -83,7 +83,7 @@
 // }
 
 import React, { useState } from 'react';
-import { Card, Modal, Button, Badge } from 'react-bootstrap';
+import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
 
 export default function RecipeCard(props) {
   const [modalContent, setModalContent] = useState({
@@ -121,13 +121,13 @@ export default function RecipeCard(props) {
           <Card.Text className="cookTime">Cook Time: {props.cookTime}</Card.Text>
           <Card.Text className="servingSize">Serving Size: {props.servingSize}</Card.Text>
           {props.tags && props.tags.split(',').length > 0 && (
-            <div className="d-flex gap-2">
-              {props.tags.split(',').map((tag) => (
-                <Badge key={tag} bg="dark">
-                  {tag.trim()}
-                </Badge>
-              ))}
-            </div>
+            <div className="d-flex flex-wrap gap-2">
+            {props.tags.split(',').map((tag) => (
+              <Badge key={tag} bg="dark">
+                {tag.trim()}
+              </Badge>
+            ))}
+          </div>
           )}
           <Button className="btn btn-primary mt-auto" onClick={handleModalOpen}>
             More Information
