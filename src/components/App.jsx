@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import AddRecipe from "./AddRecipe"
+import NavComponent from "./NavComponent"
 
 function App() {
   return (
@@ -17,17 +18,20 @@ function App() {
               <Routes>
                 <Route path="/" element={
                   <PrivateRoute>
+                      <NavComponent/>
                       <Dashboard />
                   </PrivateRoute>
                   }
                 />
                 <Route path='/update-profile' element = {
                   <PrivateRoute>
+                    <NavComponent/>
                     <UpdateProfile/>
                   </PrivateRoute>}
                 />
                 <Route path='/add-recipe' element={
                   <PrivateRoute>
+                    <NavComponent/>
                     <AddRecipe/>
                   </PrivateRoute>}
                 />
