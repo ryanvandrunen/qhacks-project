@@ -8,6 +8,7 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
+import Firestore from "./Firestore"
 
 function App() {
   return (
@@ -27,6 +28,12 @@ function App() {
                     <UpdateProfile/>
                   </PrivateRoute>}
                 />
+                <Route path='/add-recipe' element={
+                  <PrivateRoute>
+                    <Firestore/>
+                  </PrivateRoute>}
+                />
+
                 <Route path='/signup' element={<Signup/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
