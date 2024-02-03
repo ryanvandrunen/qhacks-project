@@ -2,9 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Card, Button, Alert, Nav, Navbar, Carousel, Container, Form, FormControl } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from "../firebase"
 
@@ -13,16 +10,27 @@ export default function Dashboard() {
     const [error, setError] = useState('')
     const { currentUser, logout } = useAuth()
     const navigate = useNavigate()
+    const [recipes, setRecipes] = useState()
 
-  const fetchRecipe = async () => {
-    await getDocs(collection(db, "recipes"))
-            .then((querySnapshot) => {
-                const newData = querySnapshot.docs
-                    .map((doc) => ({ ...doc.data(), id: doc.id }));
-                    console.log(newData)
-            })
-  }
+    const fetchRecipes = async () => {
+        try {
+          const querySnapshot = await getDocs(collection(db, "recipes"));
+          const newData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+          return newData;
+        } catch (error) {
+          console.error('Error fetching recipes:', error);
+          return [];
+        }
+      }
 
+      useEffect(() => {
+        const fetchData = async () => {
+          const newData = await fetchRecipes();
+          setRecipes(newData);
+        };
+    
+        fetchData();
+      }, []); 
 
     return (
         <>
@@ -42,7 +50,7 @@ export default function Dashboard() {
                             placeholder="Search"
                             disabled
                         />
-                        <Button variant="outline-info" onClick={fetchRecipe}>
+                        <Button variant="outline-info">
                             Search
                         </Button>
                     </Form>
@@ -99,7 +107,7 @@ export default function Dashboard() {
                             <p className="card-text">Tags:</p>
                          </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
