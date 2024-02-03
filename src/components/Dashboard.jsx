@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+import { getDocs, collection } from 'firebase/firestore'
+import { db } from "../firebase"
 
 export default function Dashboard() {
     const searchRef = useRef()
@@ -12,16 +14,15 @@ export default function Dashboard() {
     const { currentUser, logout } = useAuth()
     const navigate = useNavigate()
 
-    async function handleLogout() {
-        setError('')
+  const fetchRecipe = async () => {
+    await getDocs(collection(db, "recipes"))
+            .then((querySnapshot) => {
+                const newData = querySnapshot.docs
+                    .map((doc) => ({ ...doc.data(), id: doc.id }));
+                    console.log(newData)
+            })
+  }
 
-        try {
-            await logout()
-            navigate('/login')
-        } catch {
-            setError('Failed to log out')
-        }
-    }
 
     return (
         <>
@@ -41,7 +42,7 @@ export default function Dashboard() {
                             placeholder="Search"
                             disabled
                         />
-                        <Button variant="outline-info">
+                        <Button variant="outline-info" onClick={fetchRecipe}>
                             Search
                         </Button>
                     </Form>

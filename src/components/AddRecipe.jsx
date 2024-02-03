@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../firebase'
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { Button, Form, Card, Alert, FormControl, Navbar, Nav, Container, Image } from 'react-bootstrap';
+import { Button, Form, Card, Alert, FormControl, Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 const AddRecipe = () => {
@@ -12,6 +12,7 @@ const AddRecipe = () => {
         instructions: '',
         tags: ''
     });
+
     const searchRef = useRef('')
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState('');
@@ -44,7 +45,7 @@ const AddRecipe = () => {
 
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {
-            console.error("Error adding document: ", e);
+            setError('Could not submit the recipe')
         }
     }
 
@@ -57,10 +58,6 @@ const AddRecipe = () => {
                 console.log(recipes, newData);
             })
     }
-
-    useEffect(() => {
-        fetchPost();
-    }, [])
 
     // const handleFileChange = (event) => {
     //     const file = event.target.files[0]
@@ -154,6 +151,7 @@ const AddRecipe = () => {
                                         placeholder="Cooking time (e.g.2h30m)"
                                         value={formData.cookTime}
                                         onChange={handleInputChange}
+                                        required
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -174,6 +172,7 @@ const AddRecipe = () => {
                                         placeholder="Instructions"
                                         value={formData.instructions}
                                         onChange={handleInputChange}
+                                        required
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -184,6 +183,7 @@ const AddRecipe = () => {
                                         placeholder="tags"
                                         value={formData.tags}
                                         onChange={handleInputChange}
+                                        required
                                     />
                                 </Form.Group>
                                 {/* <Form.Group>
