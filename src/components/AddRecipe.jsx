@@ -1,9 +1,8 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../firebase'
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { Button, Form, Card, Alert } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container'
+import { Button, Form, Card, Alert, FormControl, Navbar, Nav, Container, Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
 const AddRecipe = () => {
     const [formData, setFormData] = useState({
@@ -11,8 +10,10 @@ const AddRecipe = () => {
         ingredients: '',
         cookTime: '',
         instructions: '',
-        tags: ''
+        tags: '',
+        img: ''
     });
+    const searchRef = useRef('')
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState('');
 
@@ -24,13 +25,13 @@ const AddRecipe = () => {
                 ...formData
             });
 
-            // Reset form data
             setFormData({
                 recipeTitle: '',
                 ingredients: '',
                 cookTime: '',
                 instructions: '',
-                tags: ''
+                tags: '',
+                img: ''
             });
 
             console.log("Document written with ID: ", docRef.id);
@@ -63,8 +64,29 @@ const AddRecipe = () => {
     }
 
     return (
-        <section className="todo-container">
-            <div className="todo">
+            <>
+            <Navbar expand="lg" className="navbar navbar-dark bg-dark">
+                <Container>
+                    <Navbar.Brand>Recipe Website</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} to="/" className='font-weight-bold'>Home</Nav.Link>
+                        <Nav.Link as={Link} to="/update-profile">Profile</Nav.Link>
+                        <Nav.Link as={Link} to="/add-recipe">Contribute</Nav.Link>
+                    </Nav>
+                    <Form className="d-flex gap-2">
+                        <FormControl
+                            // onChange={this.handleSearchInput}
+                            ref={searchRef}
+                            type="text"
+                            placeholder="Search"
+                            disabled
+                        />
+                        <Button variant="outline-info">
+                            Search
+                        </Button>
+                    </Form>
+                </Container>
+            </Navbar>
                 <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
                     <div className="w-100" style={{ maxWidth: '400px' }}>
                         <Card>
@@ -94,7 +116,7 @@ const AddRecipe = () => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Cooking time (XhXX):</Form.Label>
+                                    <Form.Label>Cooking time (XhXXm):</Form.Label>
                                     <Form.Control
                                         name="cookTime"
                                         type="text"
@@ -123,6 +145,14 @@ const AddRecipe = () => {
                                         onChange={handleInputChange}
                                     />
                                 </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Image</Form.Label>
+                                    <Form.Control type='file' onChange={handleInputChange}
+                                    label="Upload a Photo"
+                                    accept=".png,.jpg,.jpeg,.webp"
+                                    />
+                                    <Image src={formData['img']}></Image>
+                                </Form.Group>
                                 <div className="btn-container mt-3">
                                     <Button
                                         type="submit"
@@ -146,8 +176,7 @@ const AddRecipe = () => {
                         ))
                     }
                 </div>
-            </div>
-        </section>
+            </>
     )
 }
 

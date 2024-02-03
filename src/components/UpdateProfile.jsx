@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Card, Form, Button, Alert, Container, Navbar, Nav } from 'react-bootstrap'
+import { Card, Form, Button, Alert, Container, Navbar, Nav, FormControl } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -11,6 +11,7 @@ export default function UpdateProfile() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const searchRef = useRef()
 
   async function handleLogout() {
     setError('')
@@ -59,6 +60,18 @@ export default function UpdateProfile() {
                         <Nav.Link as={Link} to="/update-profile">Profile</Nav.Link>
                         <Nav.Link as={Link} to="/add-recipe">Contribute</Nav.Link>
                     </Nav>
+                    <Form className="d-flex gap-2">
+                        <FormControl
+                            // onChange={this.handleSearchInput}
+                            ref={searchRef}
+                            type="text"
+                            placeholder="Search"
+                            disabled
+                        />
+                        <Button variant="outline-info">
+                            Search
+                        </Button>
+                    </Form>
                 </Container>
             </Navbar>
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
