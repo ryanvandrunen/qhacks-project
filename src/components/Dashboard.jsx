@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { Card, Button, Alert, Nav, Navbar, Carousel, Container } from 'react-bootstrap'
+import React, { useState, useEffect, useRef } from 'react'
+import { Card, Button, Alert, Nav, Navbar, Carousel, Container, Form, FormControl } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
+    const searchRef = useRef()
     const [error, setError] = useState('')
     const { currentUser, logout } = useAuth()
     const navigate = useNavigate()
@@ -27,12 +28,19 @@ export default function Dashboard() {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/" className='font-weight-bold'>Home</Nav.Link>
                         <Nav.Link as={Link} to="/update-profile">Profile</Nav.Link>
-                        <Navbar.Collapse className="justify-content-end">
-                            <Navbar.Text>
-                                Signed in as: {currentUser.email}
-                            </Navbar.Text>
-                        </Navbar.Collapse>
                     </Nav>
+                    <Form className="d-flex gap-2">
+                        <FormControl
+                            // onChange={this.handleSearchInput}
+                            ref={searchRef}
+                            type="text"
+                            placeholder="Search"
+                            disabled
+                        />
+                        <Button variant="outline-info">
+                            Search
+                        </Button>
+                    </Form>
                 </Container>
             </Navbar>
             
