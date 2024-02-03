@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Card, Form, Button, Alert, Container } from 'react-bootstrap'
+import { Card, Form, Button, Alert, Container, Navbar, Nav } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -50,6 +50,16 @@ export default function UpdateProfile() {
   }
 
   return (
+    <>
+    <Navbar expand="lg" className="navbar navbar-dark bg-dark">
+                <Container>
+                    <Navbar.Brand>Recipe Website</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} to="/" className='font-weight-bold'>Home</Nav.Link>
+                        <Nav.Link as={Link} to="/update-profile">Profile</Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
     <div className="w-100" style={{ maxWidth: '400px' }}>
       <Card>
@@ -83,5 +93,6 @@ export default function UpdateProfile() {
       </div>
     </div>
     </Container>
+    </>
   )
 }
