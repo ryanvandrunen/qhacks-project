@@ -1,100 +1,145 @@
+
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase'
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Card, Alert } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container'
 
- 
- 
 const AddRecipe = () => {
-    const [recipeTitle, setRecipeTitle] = useState("");
-    const [ingredients, setIngredients] = useState("");
+    const [formData, setFormData] = useState({
+        recipeTitle: '',
+        ingredients: '',
+        cookTime: '',
+        instructions: '',
+        tags: ''
+    });
     const [recipes, setRecipes] = useState([]);
-    const [cookTime, setCookTime] = useState([])
-    const [instructions, setInstructions] = useState([])
-    const [tags, setTags] = useState([])
- 
+    const [error, setError] = useState('');
+
     const addRecipe = async (e) => {
-        e.preventDefault();  
-       
+        e.preventDefault();
+
         try {
             const docRef = await addDoc(collection(db, "recipes"), {
-              recipeTitle: recipeTitle,    
-              ingredients: ingredients,
-              cookTime: cookTime,
-              instructions: instructions,
-              tags: tags
+                ...formData
             });
+
+            // Reset form data
+            setFormData({
+                recipeTitle: '',
+                ingredients: '',
+                cookTime: '',
+                instructions: '',
+                tags: ''
+            });
+
             console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
+        } catch (e) {
             console.error("Error adding document: ", e);
-          }
+        }
     }
- 
+
     const fetchPost = async () => {
-       
         await getDocs(collection(db, "todos"))
-            .then((querySnapshot)=>{              
+            .then((querySnapshot) => {
                 const newData = querySnapshot.docs
-                    .map((doc) => ({...doc.data(), id:doc.id }));
-                setRecipes(newData);                
+                    .map((doc) => ({ ...doc.data(), id: doc.id }));
+                setRecipes(newData);
                 console.log(recipes, newData);
             })
-       
     }
-   
-    useEffect(()=>{
+
+    useEffect(() => {
         fetchPost();
     }, [])
- 
- 
+
+    // Update form data handler
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    }
+
     return (
         <section className="todo-container">
             <div className="todo">
-                <h1 className="header">
-                    Add Recipe
-                </h1>
-   
-                <Form>
-   
-                    <Form.Group>
-                        <Form.Control type="text" placeholder="Recipe title" onChange={(e)=>setRecipeTitle(e.target.value)}
-                        required />
-                    </Form.Group>
-                    <Form.Group>
-                        <input type="text" 
-                        placeholder="List of ingredients (,)"
-                        onChange={(e)=>setIngredients(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group>
-                        <input type="text" 
-                        placeholder="Cooking time"
-                        onChange={(e)=>setCookTime(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group>
-                        <input type="text" 
-                        placeholder="Instructions (,)"
-                        onChange={(e)=>setInstructions(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group>
-                        <input type="text" 
-                        placeholder="tags"
-                        onChange={(e)=>setTags(e.target.value)}/>
-                    </Form.Group>
-                    <div className="btn-container">
-                        <Button
-                            type="submit"
-                            className="btn-primary"
-                            onClick={addRecipe}
-                        >
-                            Submit
-                        </Button>
+                <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+                    <div className="w-100" style={{ maxWidth: '400px' }}>
+                        <Card>
+                            <Card.Body className="d-flex flex-column align-items-center">
+                                <h2 className="text-center mb-4">Add Recipe</h2>
+                                {error && <Alert variant="danger">{error}</Alert>}
+                                <Form.Group>
+                                    <Form.Label>Recipe title:</Form.Label>
+                                    <Form.Control
+                                        name="recipeTitle"
+                                        type="text"
+                                        placeholder="Recipe title"
+                                        value={formData.recipeTitle}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Ingredients:</Form.Label>
+                                    <Form.Control
+                                        name="ingredients"
+                                        type="text"
+                                        placeholder="List of ingredients (,)"
+                                        value={formData.ingredients}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Cooking time (XhXX):</Form.Label>
+                                    <Form.Control
+                                        name="cookTime"
+                                        type="text"
+                                        placeholder="Cooking time"
+                                        value={formData.cookTime}
+                                        onChange={handleInputChange}
+                                    />
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Instructions:</Form.Label>
+                                    <Form.Control
+                                        name="instructions"
+                                        type="text"
+                                        placeholder="Instructions"
+                                        value={formData.instructions}
+                                        onChange={handleInputChange}
+                                    />
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Tags:</Form.Label>
+                                    <Form.Control
+                                        name="tags"
+                                        type="text"
+                                        placeholder="tags"
+                                        value={formData.tags}
+                                        onChange={handleInputChange}
+                                    />
+                                </Form.Group>
+                                <div className="btn-container mt-3">
+                                    <Button
+                                        type="submit"
+                                        className="btn-primary"
+                                        onClick={addRecipe}
+                                    >
+                                        Submit
+                                    </Button>
+                                </div>
+                            </Card.Body>
+                        </Card>
                     </div>
-   
-                </Form>
-   
+                </Container>
+
                 <div className="todo-content">
                     {
-                        recipes?.map((fieldTitle,i)=>(
+                        recipes?.map((fieldTitle, i) => (
                             <p key={i}>
                                 {fieldTitle.fieldContents}
                             </p>
@@ -106,4 +151,4 @@ const AddRecipe = () => {
     )
 }
 
-export default AddRecipe
+export default AddRecipe;
