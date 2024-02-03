@@ -2,6 +2,35 @@ import React, { useState } from 'react';
 import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
 import myImage from '../../Food Images/-burnt-carrots-and-parsnips-56390131.jpg'
 
+const tagContainerStyle = {
+  display: 'flex',
+  gap: '2px',
+  flexWrap: 'wrap',
+  maxWidth: '100%', /* Set the maximum width as needed */
+  overflow: 'hidden',
+};
+
+const cardTagStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+};
+
+const modalTagContainerStyle = {
+  display: 'flex',
+  gap: '2px',
+  flexWrap: 'wrap',
+  maxWidth: '100%', /* Set the maximum width as needed */
+  overflow: 'hidden',
+};
+
+const modalTagStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+};
+
+
 export default function RecipeCard(props) {
   const [modalContent, setModalContent] = useState({
     ingredients: '',
