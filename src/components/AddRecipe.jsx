@@ -15,7 +15,11 @@ const AddRecipe = () => {
     const searchRef = useRef('')
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState('');
+<<<<<<< Updated upstream
     // const [previewImage, setPreviewImage] = useState(null)
+=======
+    const [servingSize, setServingSize] = useState('')
+>>>>>>> Stashed changes
 
     const addRecipe = async (e) => {
         e.preventDefault();
@@ -153,6 +157,16 @@ const AddRecipe = () => {
                                         type="text"
                                         placeholder="Cooking time (e.g.2h30m)"
                                         value={formData.cookTime}
+                                        onChange={handleInputChange}
+                                    />
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Serving size:</Form.Label>
+                                    <Form.Control
+                                        name="servingSize"
+                                        type="text"
+                                        placeholder="Serving size"
+                                        value={formData.servingSize}
                                         onChange={handleInputChange}
                                     />
                                 </Form.Group>
