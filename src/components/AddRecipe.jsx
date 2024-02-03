@@ -118,7 +118,7 @@ const AddRecipe = () => {
                                         placeholder="Recipe title"
                                         value={formData.recipeTitle}
                                         onChange={handleInputChange}
-                                        required
+                                        autoComplete='off'
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -129,7 +129,7 @@ const AddRecipe = () => {
                                         placeholder="List of ingredients (,)"
                                         value={formData.ingredients}
                                         onChange={handleInputChange}
-                                        required
+                                        autoComplete='off'
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -140,7 +140,7 @@ const AddRecipe = () => {
                                         placeholder="(e.g.2h30m)"
                                         value={formData.cookTime}
                                         onChange={handleInputChange}
-                                        required
+                                        autoComplete='off'
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -151,6 +151,7 @@ const AddRecipe = () => {
                                         placeholder="Serving size"
                                         value={formData.servingSize}
                                         onChange={handleInputChange}
+                                        autoComplete='off'
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -161,7 +162,7 @@ const AddRecipe = () => {
                                         placeholder="Instructions"
                                         value={formData.instructions}
                                         onChange={handleInputChange}
-                                        required
+                                        autoComplete='off'
                                     />
                                 </Form.Group>
                                 <Form.Group>
@@ -172,7 +173,7 @@ const AddRecipe = () => {
                                         placeholder="Tags"
                                         value={formData.tags}
                                         onChange={handleInputChange}
-                                        required
+                                        autoComplete='off'
                                     />
                                     <div style={{color: 'red', fontSize: '12px', marginTop: '5px'}}>* indicates required field</div>
                                 </Form.Group>
