@@ -4,6 +4,7 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { Button, Form, Card, Alert, FormControl, Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
+
 const AddRecipe = () => {
     const [formData, setFormData] = useState({
         recipeTitle: '',

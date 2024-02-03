@@ -7,12 +7,22 @@ import { resolve } from "path";
 import { exit } from "process";
 import readline from "readline"
 
-import { db } from '../firebase'
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+import firebase from 'firebase/compat/app'
 
 const openai = new OpenAI({
     apiKey: "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"              //dumb guy "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"  
 });
+
+const app = firebase.initializeApp({
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
+})
 
 const getRandomFloat = (min, max) => Math.random() * (max - min) + min;
 
@@ -420,16 +430,18 @@ const cleanedSize = cleanSize(details.servingSize);
 
 console.log("Cleaned size:", cleanedSize);
 
-
-const docRef = await addDoc(collection(db, "recipes"), {
-    recipeTitle: '',
-    ingredients: cleanedIngs,
-    instructions: cleanedIns,
-    servingSize: cleanedSize,
-    tags: 'AI',
-    cookTime: convertedTime
-})
-
-console.log('Document added with ID: ', docRef.id)
+try {
+    const docRef = await addDoc(collection(getFirestore(app), "recipes"), {
+        recipeTitle: "",
+        ingredients: cleanedIngs,
+        instructions: cleanedIns,
+        servingSize: cleanedSize,
+        tags: "",
+        cookTime: convertedTime
+    });
+    console.log("Document written with ID: ", docRef.id);
+} catch (e) {
+    console.log('Could not submit the recipe:', e)
+}
 
 process.exit();
