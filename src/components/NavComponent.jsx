@@ -14,6 +14,7 @@ export default function NavComponent() {
                         <Nav.Link as={Link} to="/" className='font-weight-bold'>Home</Nav.Link>
                         <Nav.Link as={Link} to="/update-profile">Profile</Nav.Link>
                         <Nav.Link as={Link} to="/add-recipe">Contribute</Nav.Link>
+                        <Nav.Link as={Link} to='/stores-near-me'>Stores Near Me</Nav.Link>
                     </Nav>
                     <Form className="d-flex gap-2">
                         <FormControl

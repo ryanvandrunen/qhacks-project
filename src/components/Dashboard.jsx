@@ -55,32 +55,6 @@ export default function Dashboard() {
         <p>Loading recipes...</p>
       )}
     </Container>
-
-
-
-            {/* <Carousel data-bs-theme='dark'>
-                <Carousel.Item>
-                    <img className="mx-auto d-block w-50" src={example1} alt="First slide" />
-                    <Carousel.Caption>
-                        <h5>First slide label</h5>
-                        <p>Example first slide</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img className="mx-auto d-block w-50"src={example2} alt="Second slide" />
-                    <Carousel.Caption>
-                        <h5>Second slide label</h5>
-                        <p>Example second slide</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img className="mx-auto d-block w-50" src={example3} alt="Third slide" />
-                    <Carousel.Caption>
-                        <h5>Third slide label</h5>
-                        <p>Example third slide</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-            </Carousel> */}
         </>
     )
 }

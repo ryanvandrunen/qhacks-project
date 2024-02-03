@@ -46,7 +46,7 @@ export default function RecipeCard(props) {
             </div>
           )}
           <Button class="btn btn-primary" onClick={handleModalOpen}>
-            Expand for modal
+            More Information
           </Button>
         </Card.Body>
       </Card>

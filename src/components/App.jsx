@@ -10,6 +10,7 @@ import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import AddRecipe from "./AddRecipe"
 import NavComponent from "./NavComponent"
+import Location from "./Location"
 
 function App() {
   return (
@@ -35,7 +36,12 @@ function App() {
                     <AddRecipe/>
                   </PrivateRoute>}
                 />
-
+                <Route path='/stores-near-me' element={
+                  <PrivateRoute>
+                    <NavComponent/>
+                    <Location/>
+                  </PrivateRoute>
+                }></Route>
                 <Route path='/signup' element={<Signup/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
