@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase'
 import { collection, addDoc, getDocs } from "firebase/firestore";
+import { Button, Form } from 'react-bootstrap';
 
  
  
-const Todo = () => {
-    const [todo, setTodo] = useState("");
-    const [todos, setTodos] = useState([]);
+const AddRecipe = () => {
+    const [recipeTitle, setRecipeTitle] = useState("");
+    const [ingredients, setIngredients] = useState("");
+    const [recipes, setRecipes] = useState([]);
+    const [cookTime, setCookTime] = useState([])
+    const [instructions, setInstructions] = useState([])
+    const [tags, setTags] = useState([])
  
-    const addTodo = async (e) => {
+    const addRecipe = async (e) => {
         e.preventDefault();  
        
         try {
-            const docRef = await addDoc(collection(db, "todos"), {
-              todo: todo,    
+            const docRef = await addDoc(collection(db, "recipes"), {
+              recipeTitle: recipeTitle,    
+              ingredients: ingredients,
+              cookTime: cookTime,
+              instructions: instructions,
+              tags: tags
             });
             console.log("Document written with ID: ", docRef.id);
           } catch (e) {
@@ -27,8 +36,8 @@ const Todo = () => {
             .then((querySnapshot)=>{              
                 const newData = querySnapshot.docs
                     .map((doc) => ({...doc.data(), id:doc.id }));
-                setTodos(newData);                
-                console.log(todos, newData);
+                setRecipes(newData);                
+                console.log(recipes, newData);
             })
        
     }
@@ -42,36 +51,52 @@ const Todo = () => {
         <section className="todo-container">
             <div className="todo">
                 <h1 className="header">
-                    Todo-App
+                    Add Recipe
                 </h1>
    
-                <div>
+                <Form>
    
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="What do you have to do today?"
-                            onChange={(e)=>setTodo(e.target.value)}
-                        />
-                    </div>
-   
+                    <Form.Group>
+                        <Form.Control type="text" placeholder="Recipe title" onChange={(e)=>setRecipeTitle(e.target.value)}
+                        required />
+                    </Form.Group>
+                    <Form.Group>
+                        <input type="text" 
+                        placeholder="List of ingredients (,)"
+                        onChange={(e)=>setIngredients(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <input type="text" 
+                        placeholder="Cooking time"
+                        onChange={(e)=>setCookTime(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <input type="text" 
+                        placeholder="Instructions (,)"
+                        onChange={(e)=>setInstructions(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <input type="text" 
+                        placeholder="tags"
+                        onChange={(e)=>setTags(e.target.value)}/>
+                    </Form.Group>
                     <div className="btn-container">
-                        <button
+                        <Button
                             type="submit"
-                            className="btn"
-                            onClick={addTodo}
+                            className="btn-primary"
+                            onClick={addRecipe}
                         >
                             Submit
-                        </button>
+                        </Button>
                     </div>
    
-                </div>
+                </Form>
    
                 <div className="todo-content">
                     {
-                        todos?.map((todo,i)=>(
+                        recipes?.map((fieldTitle,i)=>(
                             <p key={i}>
-                                {todo.todo}
+                                {fieldTitle.fieldContents}
                             </p>
                         ))
                     }
@@ -80,5 +105,5 @@ const Todo = () => {
         </section>
     )
 }
- 
-export default Todo
+
+export default AddRecipe
