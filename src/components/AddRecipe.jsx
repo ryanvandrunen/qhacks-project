@@ -104,7 +104,7 @@ const AddRecipe = () => {
 
     return (
             <>
-                <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+                <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "70vh" }}>
                     <div className="w-100" style={{ maxWidth: '400px' }}>
                         <Card>
                             <Card.Body className="d-flex flex-column align-items-center">
@@ -201,16 +201,6 @@ const AddRecipe = () => {
                         </Card>
                     </div>
                 </Container>
-
-                <div className="todo-content">
-                    {
-                        recipes?.map((fieldTitle, i) => (
-                            <p key={i}>
-                                {fieldTitle.fieldContents}
-                            </p>
-                        ))
-                    }
-                </div>
             </>
     )
 }
