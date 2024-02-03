@@ -15,11 +15,7 @@ const AddRecipe = () => {
     const searchRef = useRef('')
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState('');
-<<<<<<< Updated upstream
-    // const [previewImage, setPreviewImage] = useState(null)
-=======
     const [servingSize, setServingSize] = useState('')
->>>>>>> Stashed changes
 
     const addRecipe = async (e) => {
         e.preventDefault();
