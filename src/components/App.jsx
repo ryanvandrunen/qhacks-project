@@ -17,9 +17,7 @@ function App() {
               <Routes>
                 <Route path="/" element={
                   <PrivateRoute>
-                    <div className="relative">
                       <Dashboard />
-                    </div>
                   </PrivateRoute>
                   }
                 />
