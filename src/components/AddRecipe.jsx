@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/components/Firestore.jsx
-import React, { useState, useEffect } from 'react';
-=======
 import React, { useState, useEffect, useRef } from 'react';
->>>>>>> 72929f6feb64e9ccb64df66fc89149ffc5096bd5:src/components/AddRecipe.jsx
 import { db } from '../firebase'
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { Button, Form, Card, Alert, FormControl, Navbar, Nav, Container, Image } from 'react-bootstrap';
@@ -131,11 +127,7 @@ const AddRecipe = () => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-<<<<<<< HEAD:src/components/Firestore.jsx
-                                    <Form.Label>Cooking time:</Form.Label>
-=======
                                     <Form.Label>Cooking time (XhXXm):</Form.Label>
->>>>>>> 72929f6feb64e9ccb64df66fc89149ffc5096bd5:src/components/AddRecipe.jsx
                                     <Form.Control
                                         name="cookTime"
                                         type="text"
