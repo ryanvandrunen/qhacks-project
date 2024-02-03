@@ -22,11 +22,21 @@ const AddRecipe = () => {
         e.preventDefault();
 
         const isValidCookTime = /^[0-9]h[0-5]?[0-9]m$/.test(formData.cookTime);
+        const isValidServingSize = /^[0-99]$/.test(formData.servingSize)
 
-        if (!isValidCookTime && formData.cookTime !== "") {
+        if (formData.recipeTitle=="" || formData.cookTime=="" || formData.ingredients=="" || formData.servingSize=="" || formData.instructions==""){
+            setError("One or more required fields are empty, please try again.")
+            return;
+        }
+
+        if (!isValidCookTime || formData.cookTime == "") {
             setError("Invalid cooking time format. Use XhYYm format (e.g., 2h30).");
             return;
-    }
+        }
+        if (!isValidServingSize || formData.servingSize ==""){
+            setError("Invalid serving size format, enter a number");
+            return;
+        }
 
         try {
             const docRef = await addDoc(collection(db, "recipes"), {
@@ -38,7 +48,8 @@ const AddRecipe = () => {
                 ingredients: '',
                 cookTime: '',
                 instructions: '',
-                tags: ''
+                tags: '',
+                servingSize: ''
             });
 
             setError("")
@@ -101,7 +112,7 @@ const AddRecipe = () => {
                                 <h2 className="text-center mb-4">Add Recipe</h2>
                                 {error && <Alert variant="danger">{error}</Alert>}
                                 <Form.Group>
-                                    <Form.Label>Recipe title:</Form.Label>
+                                    <Form.Label>Recipe title:<span style={{color: 'red'}}> *</span></Form.Label>
                                     <Form.Control
                                         name="recipeTitle"
                                         type="text"
@@ -112,7 +123,7 @@ const AddRecipe = () => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Ingredients:</Form.Label>
+                                    <Form.Label>Ingredients:<span style={{color: 'red'}}> *</span></Form.Label>
                                     <Form.Control
                                         name="ingredients"
                                         type="text"
@@ -123,18 +134,18 @@ const AddRecipe = () => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Cooking time (XhXXm):</Form.Label>
+                                    <Form.Label>Cooking time (XhXXm):<span style={{color: 'red'}}> *</span></Form.Label>
                                     <Form.Control
                                         name="cookTime"
                                         type="text"
-                                        placeholder="Cooking time (e.g.2h30m)"
+                                        placeholder="(e.g.2h30m)"
                                         value={formData.cookTime}
                                         onChange={handleInputChange}
                                         required
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Serving size:</Form.Label>
+                                    <Form.Label>Serving size:<span style={{color: 'red'}}> *</span></Form.Label>
                                     <Form.Control
                                         name="servingSize"
                                         type="text"
@@ -144,7 +155,7 @@ const AddRecipe = () => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Instructions:</Form.Label>
+                                    <Form.Label>Instructions:<span style={{color: 'red'}}> *</span></Form.Label>
                                     <Form.Control
                                         name="instructions"
                                         type="text"
@@ -159,12 +170,14 @@ const AddRecipe = () => {
                                     <Form.Control
                                         name="tags"
                                         type="text"
-                                        placeholder="tags"
+                                        placeholder="Tags"
                                         value={formData.tags}
                                         onChange={handleInputChange}
                                         required
                                     />
+                                    <div style={{color: 'red', fontSize: '12px', marginTop: '5px'}}>* indicates required field</div>
                                 </Form.Group>
+
                                 {/* <Form.Group>
                                     <Form.Label>Upload a Preview:</Form.Label>
                                     <Form.Control type='file' name='image' onChange={e=>{handleFileChange(e); handleInputChange(e)}}
