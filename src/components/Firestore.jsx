@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase'
 import { collection, addDoc, getDocs } from "firebase/firestore";
@@ -19,6 +18,13 @@ const AddRecipe = () => {
     const addRecipe = async (e) => {
         e.preventDefault();
 
+        const isValidCookTime = /^[0-9]h[0-5]?[0-9]m$/.test(formData.cookTime);
+
+        if (!isValidCookTime && formData.cookTime !== "") {
+            setError("Invalid cooking time format. Use XhYYm format (e.g., 2h30).");
+            return;
+    }
+
         try {
             const docRef = await addDoc(collection(db, "recipes"), {
                 ...formData
@@ -32,6 +38,8 @@ const AddRecipe = () => {
                 instructions: '',
                 tags: ''
             });
+
+            setError("")
 
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {
@@ -52,6 +60,8 @@ const AddRecipe = () => {
     useEffect(() => {
         fetchPost();
     }, [])
+
+    
 
     // Update form data handler
     const handleInputChange = (e) => {
@@ -94,11 +104,11 @@ const AddRecipe = () => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Cooking time (XhXX):</Form.Label>
+                                    <Form.Label>Cooking time:</Form.Label>
                                     <Form.Control
                                         name="cookTime"
                                         type="text"
-                                        placeholder="Cooking time"
+                                        placeholder="Cooking time (e.g.2h30m)"
                                         value={formData.cookTime}
                                         onChange={handleInputChange}
                                     />
@@ -126,7 +136,7 @@ const AddRecipe = () => {
                                 <div className="btn-container mt-3">
                                     <Button
                                         type="submit"
-                                        className="btn-primary"
+                                        className="btn-warning"
                                         onClick={addRecipe}
                                     >
                                         Submit
