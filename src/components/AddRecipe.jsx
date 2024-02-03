@@ -71,30 +71,6 @@ const AddRecipe = () => {
             })
     }
 
-    // const handleFileChange = (event) => {
-    //     const file = event.target.files[0]
-    //     console.log(file)
-
-    //     try {
-    //         if (file) {
-    //             const acceptedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp']
-    //             const reader = new FileReader()
-    //             if (acceptedTypes.includes(file.type)) {
-    //                 reader.onloadend = () => {
-    //                     setPreviewImage(reader.result)
-    //                 }
-    //             }
-    //             reader.readAsDataURL(file)
-    
-    //             handleInputChange(event)
-    //             setError('')
-    //         }
-    //     } catch {
-    //         setError('File upload or preview failed')
-    //     }
-    // }
-
-    // Update form data handler
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -179,16 +155,6 @@ const AddRecipe = () => {
                                     <div style={{color: 'red', fontSize: '12px', marginTop: '5px'}}>* indicates required field</div>
                                 </Form.Group>
 
-                                {/* <Form.Group>
-                                    <Form.Label>Upload a Preview:</Form.Label>
-                                    <Form.Control type='file' name='image' onChange={e=>{handleFileChange(e); handleInputChange(e)}}
-                                    label="Upload a Photo"
-                                    accept=".png,.jpg,.jpeg,.webp"
-                                    />
-                                    {previewImage && (
-                                        <Image src={previewImage} alt="Preview" fluid></Image>
-                                    )}
-                                </Form.Group> */}
                                 <div className="btn-container mt-3">
                                     <Button
                                         type="submit"
