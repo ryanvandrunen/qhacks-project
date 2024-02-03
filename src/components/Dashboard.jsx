@@ -28,6 +28,7 @@ export default function Dashboard() {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/" className='font-weight-bold'>Home</Nav.Link>
                         <Nav.Link as={Link} to="/update-profile">Profile</Nav.Link>
+                        <Nav.Link as={Link} to="/add-recipe">Contribute</Nav.Link>
                     </Nav>
                     <Form className="d-flex gap-2">
                         <FormControl
