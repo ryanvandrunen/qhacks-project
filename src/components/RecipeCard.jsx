@@ -1,34 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
-
-const tagContainerStyle = {
-  display: 'flex',
-  gap: '2px',
-  flexWrap: 'wrap',
-  maxWidth: '100%', /* Set the maximum width as needed */
-  overflow: 'hidden',
-};
-
-const cardTagStyle = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-};
-
-const modalTagContainerStyle = {
-  display: 'flex',
-  gap: '2px',
-  flexWrap: 'wrap',
-  maxWidth: '100%', /* Set the maximum width as needed */
-  overflow: 'hidden',
-};
-
-const modalTagStyle = {
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-};
-
+import myImage from '../../Food Images/-burnt-carrots-and-parsnips-56390131.jpg'
 
 const tagContainerStyle = {
   display: 'flex',
@@ -90,6 +62,7 @@ export default function RecipeCard(props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Card className="card mb-4 h-100" style={{ width: '15vw', borderRadius: '15px' }}>
+        <Card.Img variant="top" src={myImage} alt={props.recipeTitle} style={{ borderRadius: '15px 15px 0 0', objectFit: 'cover', height: '10vw' }} />
         <Card.Body key={props.id} className="d-flex flex-column gap-2">
           <Card.Title className="recipeName">{props.recipeTitle}</Card.Title>
           <Card.Text className="cookTime">Cook Time: {props.cookTime}</Card.Text>
