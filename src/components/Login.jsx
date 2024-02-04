@@ -27,7 +27,7 @@ export default function Login() {
   }
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "60vh" }}>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "80vh", boxShadow: "boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'" }}>
 
     <div className="w-100" style={{ maxWidth: '400px' }}>
       <Card>

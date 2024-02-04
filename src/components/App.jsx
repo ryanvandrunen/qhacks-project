@@ -1,6 +1,5 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Signup from "./Signup"
-import { Container } from 'react-bootstrap'
 import { AuthProvider } from "../contexts/AuthContext"  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Dashboard from "./Dashboard"
@@ -11,16 +10,25 @@ import UpdateProfile from "./UpdateProfile"
 import AddRecipe from "./AddRecipe"
 import NavComponent from "./NavComponent"
 import Location from "./Location"
+import SearchResults from "./SearchResults"
 
 function App() {
+
   return (
           <Router>
             <AuthProvider>
               <Routes>
+              <Route path="/search-results" element={
+                  <PrivateRoute>
+                      <NavComponent/>
+                      <SearchResults />
+                  </PrivateRoute>
+                  }
+                />
                 <Route path="/" element={
                   <PrivateRoute>
                       <NavComponent/>
-                      <Dashboard />
+                      <Dashboard/>
                   </PrivateRoute>
                   }
                 />

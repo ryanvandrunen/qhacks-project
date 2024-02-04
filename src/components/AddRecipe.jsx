@@ -1,209 +1,179 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { db } from '../firebase'
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { Button, Form, Card, Alert, FormControl, Navbar, Nav, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
-
+import React, { useState, useRef } from 'react';
+import { db } from '../firebase';
+import { collection, addDoc, getDocs, updateDoc, query, where, doc, deleteField } from 'firebase/firestore';
+import { Button, Form, Card, Alert, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const AddRecipe = () => {
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
+    recipeTitle: '',
+    ingredients: '',
+    cookTime: '',
+    instructions: '',
+    tags: '',
+    servingSize: '',
+  });
+
+  const searchRef = useRef('');
+  const [error, setError] = useState('');
+  const recipes = collection(db, 'recipes')
+
+  const addRecipe = async (e) => {
+    e.preventDefault();
+
+    const isValidServingSize = /^[0-99]$/.test(formData.servingSize);
+
+    if (
+      formData.recipeTitle === '' ||
+      formData.cookTime === '' ||
+      formData.ingredients === '' ||
+      formData.servingSize === '' ||
+      formData.instructions === ''
+    ) {
+      setError('One or more required fields are empty, please try again.');
+      return;
+    }
+
+    if (!isValidServingSize || formData.servingSize === '') {
+      setError('Invalid serving size format, enter a number');
+      return;
+    }
+
+    try { 
+        const querySnapshot = await getDocs(recipes)
+        querySnapshot.forEach(async (queryDocumentSnapshot) => {
+            try {
+              // Get the reference to the document
+              const documentRef = doc(db, 'recipes', queryDocumentSnapshot.id);
+          
+              // Add a new field (e.g., 'newField') with a specific value (e.g., 'defaultValue')
+              await updateDoc(documentRef, {
+                newField: deleteField()
+              });
+          
+              console.log('Document successfully updated with new field!');
+            } catch (error) {
+              console.error('Error updating document: ', error);
+            }
+          });
+
+      const docRef = await addDoc(collection(db, 'recipes'), {
+        ...formData,
+      });
+
+      setFormData({
         recipeTitle: '',
         ingredients: '',
         cookTime: '',
         instructions: '',
-        tags: ''
-    });
+        tags: '',
+        servingSize: '',
+      });
 
-    const searchRef = useRef('')
-    const [recipes, setRecipes] = useState([]);
-    const [error, setError] = useState('');
-    const [servingSize, setServingSize] = useState('')
+      setError('');
 
-    const addRecipe = async (e) => {
-        e.preventDefault();
-
-        const isValidCookTime = /^[0-9]h[0-5]?[0-9]m$/.test(formData.cookTime);
-        const isValidServingSize = /^[0-99]$/.test(formData.servingSize)
-
-        if (formData.recipeTitle=="" || formData.cookTime=="" || formData.ingredients=="" || formData.servingSize=="" || formData.instructions==""){
-            setError("One or more required fields are empty, please try again.")
-            return;
-        }
-
-        if (!isValidCookTime || formData.cookTime == "") {
-            setError("Invalid cooking time format. Use XhYYm format (e.g., 2h30).");
-            return;
-        }
-        if (!isValidServingSize || formData.servingSize ==""){
-            setError("Invalid serving size format, enter a number");
-            return;
-        }
-
-        try {
-            const docRef = await addDoc(collection(db, "recipes"), {
-                ...formData
-            });
-
-            setFormData({
-                recipeTitle: '',
-                ingredients: '',
-                cookTime: '',
-                instructions: '',
-                tags: '',
-                servingSize: ''
-            });
-
-            setError("")
-
-            console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
-            setError('Could not submit the recipe')
-        }
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      setError('Could not submit the recipe');
     }
+  };
 
-    const fetchPost = async () => {
-        await getDocs(collection(db, "recipes"))
-            .then((querySnapshot) => {
-                const newData = querySnapshot.docs
-                    .map((doc) => ({ ...doc.data(), id: doc.id }));
-                setRecipes(newData);
-                console.log(recipes, newData);
-            })
-    }
+  return (
+    <>
+      <Container className="d-flex align-items-center justify-content-center p-0" style={{borderRadius: '20px',
+       paddingBottom: "50px" }}>
+        <div className="w-100" style={{ maxWidth: '400px', marginTop: '30px', marginBottom: "30px" }}>
+          <Card style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', borderRadius: '15px', overflow: 'hidden' }}>
+            <Card.Body className="d-flex flex-column align-items-center" style={{ padding: '20px' }}>
+              <h2 className="text-center mb-4" style={{ color: 'black' }}>Add Recipe</h2>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Form>
+                <Form.Group>
+                  <Form.Label>Recipe title:<span style={{ color: 'red' }}> *</span></Form.Label>
+                  <Form.Control
+                    name="recipeTitle"
+                    type="text"
+                    placeholder="Recipe title"
+                    value={formData.recipeTitle}
+                    onChange={(e) => setFormData({ ...formData, recipeTitle: e.target.value })}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Ingredients:<span style={{ color: 'red' }}> *</span></Form.Label>
+                  <Form.Control
+                    name="ingredients"
+                    type="text"
+                    placeholder="List of ingredients (,)"
+                    value={formData.ingredients}
+                    onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Cooking time (XhXXm):<span style={{ color: 'red' }}> *</span></Form.Label>
+                  <Form.Control
+                    name="cookTime"
+                    type="text"
+                    placeholder="(e.g.2h30m)"
+                    value={formData.cookTime}
+                    onChange={(e) => setFormData({ ...formData, cookTime: e.target.value })}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Serving size:<span style={{ color: 'red' }}> *</span></Form.Label>
+                  <Form.Control
+                    name="servingSize"
+                    type="text"
+                    placeholder="Serving size"
+                    value={formData.servingSize}
+                    onChange={(e) => setFormData({ ...formData, servingSize: e.target.value })}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Instructions:<span style={{ color: 'red' }}> *</span></Form.Label>
+                  <Form.Control
+                    name="instructions"
+                    type="text"
+                    placeholder="Instructions"
+                    value={formData.instructions}
+                    onChange={(e) => setFormData({ ...formData, instructions: e.target.value })}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Tags:</Form.Label>
+                  <Form.Control
+                    name="tags"
+                    type="text"
+                    placeholder="Tags (,)"
+                    value={formData.tags}
+                    onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                    autoComplete="off"
+                  />
+                  <div style={{ color: 'red', fontSize: '12px', marginTop: '5px' }}>* indicates required field</div>
+                </Form.Group>
 
-    // const handleFileChange = (event) => {
-    //     const file = event.target.files[0]
-    //     console.log(file)
-
-    //     try {
-    //         if (file) {
-    //             const acceptedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp']
-    //             const reader = new FileReader()
-    //             if (acceptedTypes.includes(file.type)) {
-    //                 reader.onloadend = () => {
-    //                     setPreviewImage(reader.result)
-    //                 }
-    //             }
-    //             reader.readAsDataURL(file)
-    
-    //             handleInputChange(event)
-    //             setError('')
-    //         }
-    //     } catch {
-    //         setError('File upload or preview failed')
-    //     }
-    // }
-
-    // Update form data handler
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    }
-
-    return (
-            <>
-                <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "70vh" }}>
-                    <div className="w-100" style={{ maxWidth: '400px' }}>
-                        <Card>
-                            <Card.Body className="d-flex flex-column align-items-center">
-                                <h2 className="text-center mb-4">Add Recipe</h2>
-                                {error && <Alert variant="danger">{error}</Alert>}
-                                <Form.Group>
-                                    <Form.Label>Recipe title:<span style={{color: 'red'}}> *</span></Form.Label>
-                                    <Form.Control
-                                        name="recipeTitle"
-                                        type="text"
-                                        placeholder="Recipe title"
-                                        value={formData.recipeTitle}
-                                        onChange={handleInputChange}
-                                        autoComplete='off'
-                                    />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Ingredients:<span style={{color: 'red'}}> *</span></Form.Label>
-                                    <Form.Control
-                                        name="ingredients"
-                                        type="text"
-                                        placeholder="List of ingredients (,)"
-                                        value={formData.ingredients}
-                                        onChange={handleInputChange}
-                                        autoComplete='off'
-                                    />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Cooking time (XhXXm):<span style={{color: 'red'}}> *</span></Form.Label>
-                                    <Form.Control
-                                        name="cookTime"
-                                        type="text"
-                                        placeholder="(e.g.2h30m)"
-                                        value={formData.cookTime}
-                                        onChange={handleInputChange}
-                                        autoComplete='off'
-                                    />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Serving size:<span style={{color: 'red'}}> *</span></Form.Label>
-                                    <Form.Control
-                                        name="servingSize"
-                                        type="text"
-                                        placeholder="Serving size"
-                                        value={formData.servingSize}
-                                        onChange={handleInputChange}
-                                        autoComplete='off'
-                                    />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Instructions:<span style={{color: 'red'}}> *</span></Form.Label>
-                                    <Form.Control
-                                        name="instructions"
-                                        type="text"
-                                        placeholder="Instructions"
-                                        value={formData.instructions}
-                                        onChange={handleInputChange}
-                                        autoComplete='off'
-                                    />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Tags:</Form.Label>
-                                    <Form.Control
-                                        name="tags"
-                                        type="text"
-                                        placeholder="Tags"
-                                        value={formData.tags}
-                                        onChange={handleInputChange}
-                                        autoComplete='off'
-                                    />
-                                    <div style={{color: 'red', fontSize: '12px', marginTop: '5px'}}>* indicates required field</div>
-                                </Form.Group>
-
-                                {/* <Form.Group>
-                                    <Form.Label>Upload a Preview:</Form.Label>
-                                    <Form.Control type='file' name='image' onChange={e=>{handleFileChange(e); handleInputChange(e)}}
-                                    label="Upload a Photo"
-                                    accept=".png,.jpg,.jpeg,.webp"
-                                    />
-                                    {previewImage && (
-                                        <Image src={previewImage} alt="Preview" fluid></Image>
-                                    )}
-                                </Form.Group> */}
-                                <div className="btn-container mt-3">
-                                    <Button
-                                        type="submit"
-                                        className="btn-warning"
-                                        onClick={addRecipe}
-                                    >
-                                        Submit
-                                    </Button>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </div>
-                </Container>
-            </>
-    )
-}
+                <div className="btn-container mt-3">
+                  <Button
+                    style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)' }}
+                    type="submit"
+                    className="btn-#fa853c"
+                    onClick={addRecipe}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </Form>
+            </Card.Body>
+          </Card>
+        </div>
+      </Container>
+    </>
+  );
+};
 
 export default AddRecipe;
+

@@ -32,7 +32,7 @@ export default function Signup() {
   }
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "70vh" }}>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "80vh" }}>
 
     <div className="w-100" style={{ maxWidth: '400px' }}>
       <Card>
