@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Card, Form, Button, Alert } from 'react-bootstrap'
+import { Card, Form, Button, Alert, Container } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 
@@ -18,7 +18,7 @@ export default function ForgotPassword() {
       setError("")
       setLoading(true)
       await resetPassword(emailRef.current.value)
-      setMessage('Check your iinbox for further instructions')
+      setMessage('Check your inbox for further instructions')
     } catch {
       setError('Failed to reset')
     }
@@ -27,7 +27,9 @@ export default function ForgotPassword() {
 
 
   return (
-    <div>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "80vh" }}>
+
+    <div className="w-100" style={{ maxWidth: '400px' }}>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Password Reset</h2>
@@ -51,5 +53,6 @@ export default function ForgotPassword() {
         Need an account? <Link to="/signup">Sign Up</Link>
       </div>
     </div>
+    </Container>
   )
 }
