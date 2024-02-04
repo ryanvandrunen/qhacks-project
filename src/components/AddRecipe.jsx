@@ -76,9 +76,12 @@ const AddRecipe = () => {
     <>
       <Container className="d-flex align-items-center justify-content-center p-0">
         <div className="w-100" style={{ maxWidth: '400px', marginTop: '30px' }}>
+      <Container className="d-flex align-items-center justify-content-center p-0" style={{borderRadius: '20px',
+       paddingBottom: "50px" }}>
+        <div className="w-100" style={{ maxWidth: '400px', marginTop: '30px', marginBottom: "30px" }}>
           <Card style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', borderRadius: '15px', overflow: 'hidden' }}>
             <Card.Body className="d-flex flex-column align-items-center" style={{ padding: '20px' }}>
-              <h2 className="text-center mb-4" style={{ color: '#008387' }}>Add Recipe</h2>
+              <h2 className="text-center mb-4" style={{ color: 'black' }}>Add Recipe</h2>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form>
                 <Form.Group>
