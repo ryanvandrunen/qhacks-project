@@ -30,7 +30,7 @@ export default function SearchResults() {
       <div className="mt-4 d-flex justify-content-center" style={{ maxWidth: '100vw' }}>
         <Form.Control
           type="text"
-          placeholder="Search recipes"
+          placeholder="Search for ingredients!"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{ maxWidth: '25vw', backgroundColor: '#d9d6d0' }}
