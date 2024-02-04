@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import RecipeCard from './RecipeCard'
 import { Container, Form, Button } from 'react-bootstrap'
 import { db } from "../firebase"
-import { collection, query, where, getDocs } from "firebase/firestore"
+import { collection, query, where, getDocs, doc, updateDoc, deleteField } from "firebase/firestore"
 
 export default function SearchResults() {
     const [searchQuery, setSearchQuery] = useState()
@@ -10,6 +10,7 @@ export default function SearchResults() {
     const recipes = collection(db, 'recipes')
 
     useEffect(() => {
+
         const fetchData = async () => {
           try {
             const q = query(recipes, where('Backend Ingredients', 'array-contains', searchQuery))

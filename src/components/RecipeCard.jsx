@@ -49,6 +49,7 @@ export default function RecipeCard(props) {
     title: '',
   });
 
+  const [imagePath, setImagePath] = useState(null)
   const [isBookmarkActive, setIsBookmarkActive] = useState(false)
   const [showModal, setShowModal] = useState(false);
 
@@ -75,7 +76,7 @@ export default function RecipeCard(props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Card className="card mb-4 h-100" style={{ width: '15vw', borderRadius: '15px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'}}>
-      <Card.Img variant="top" src={'./FoodImages/' + props.img + ".jpg"} alt={props.recipeTitle} style={{ borderRadius: '15px 15px 0 0', objectFit: 'cover', height: '10vw' }} />
+      <Card.Img variant="top" src={`./FoodImages/${props.img}.jpg`} alt={props.img} style={{ borderRadius: '15px 15px 0 0', objectFit: 'cover', height: '10vw' }} />
         <Card.Body key={props.id} className="d-flex flex-column gap-2">
         <Card.Title className="d-flex">
           <h5>{props.recipeTitle}</h5>
@@ -117,7 +118,7 @@ export default function RecipeCard(props) {
           <p className="card-text">{modalContent.servingSize}</p>
           <h6>Instructions:</h6>
           <p className="card-text">{modalContent.instructions}</p>
-          {/* <div style={modalTagContainerStyle}>
+          <div style={modalTagContainerStyle}>
             {modalContent.tags && modalContent.tags.split(',').length > 0 ? (
               modalContent.tags.split(',').slice(0, 12).map((tag, index) => (
                 <Badge key={index} bg="dark" style={modalTagStyle}>
@@ -132,7 +133,7 @@ export default function RecipeCard(props) {
                 +{modalContent.tags.split(',').length - 12} more
               </Badge>
             )}
-          </div> */}
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleModalClose}>
