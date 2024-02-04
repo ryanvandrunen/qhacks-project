@@ -83,7 +83,7 @@ const AddRecipe = () => {
             <>
                 <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "70vh" }}>
                     <div className="w-100" style={{ maxWidth: '400px' }}>
-                        <Card>
+                        <Card style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3'}}>
                             <Card.Body className="d-flex flex-column align-items-center">
                                 <h2 className="text-center mb-4">Add Recipe</h2>
                                 {error && <Alert variant="danger">{error}</Alert>}
@@ -157,6 +157,7 @@ const AddRecipe = () => {
 
                                 <div className="btn-container mt-3">
                                     <Button
+                                        style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'}}
                                         type="submit"
                                         className="btn-warning"
                                         onClick={addRecipe}
