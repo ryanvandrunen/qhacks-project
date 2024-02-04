@@ -74,8 +74,6 @@ const AddRecipe = () => {
 
   return (
     <>
-      <Container className="d-flex align-items-center justify-content-center p-0">
-        <div className="w-100" style={{ maxWidth: '400px', marginTop: '30px' }}>
       <Container className="d-flex align-items-center justify-content-center p-0" style={{borderRadius: '20px',
        paddingBottom: "50px" }}>
         <div className="w-100" style={{ maxWidth: '400px', marginTop: '30px', marginBottom: "30px" }}>
