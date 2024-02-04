@@ -22,7 +22,7 @@ const AddRecipe = () => {
     const addRecipe = async (e) => {
         e.preventDefault();
 
-        const isValidCookTime = /^[0-9]h[0-5]?[0-9]m$/.test(formData.cookTime);
+        // const isValidCookTime = /^[0-9]h[0-5]?[0-9]m$/.test(formData.cookTime);
         const isValidServingSize = /^[0-99]$/.test(formData.servingSize)
 
         if (formData.recipeTitle=="" || formData.cookTime=="" || formData.ingredients=="" || formData.servingSize=="" || formData.instructions==""){
@@ -30,10 +30,10 @@ const AddRecipe = () => {
             return;
         }
 
-        if (!isValidCookTime || formData.cookTime == "") {
-            setError("Invalid cooking time format. Use XhYYm format (e.g., 2h30).");
-            return;
-        }
+        // if (!isValidCookTime || formData.cookTime == "") {
+        //     setError("Invalid cooking time format. Use XhYYm format (e.g., 2h30).");
+        //     return;
+        // }
         if (!isValidServingSize || formData.servingSize ==""){
             setError("Invalid serving size format, enter a number");
             return;

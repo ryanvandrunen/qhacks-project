@@ -12,6 +12,7 @@ export default function Dashboard() {
     const { currentUser, logout } = useAuth()
     const navigate = useNavigate()
     const [recipes, setRecipes] = useState()
+    const [postalCode, setPostalCode] = useState()
 
     const fetchRecipes = async () => {
         try {

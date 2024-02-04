@@ -11,12 +11,20 @@ import UpdateProfile from "./UpdateProfile"
 import AddRecipe from "./AddRecipe"
 import NavComponent from "./NavComponent"
 import Location from "./Location"
+import SearchResults from "./SearchResults"
 
 function App() {
   return (
           <Router>
             <AuthProvider>
               <Routes>
+              <Route path="/search-results" element={
+                  <PrivateRoute>
+                      <NavComponent/>
+                      <SearchResults />
+                  </PrivateRoute>
+                  }
+                />
                 <Route path="/" element={
                   <PrivateRoute>
                       <NavComponent/>
