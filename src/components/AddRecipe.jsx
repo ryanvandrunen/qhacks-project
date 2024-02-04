@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom';
 
 const AddRecipe = () => {
   const [formData, setFormData] = useState({
-    recipeTitle: '',
-    ingredients: '',
-    cookTime: '',
-    instructions: '',
+    name: '',
+    Ingredients: '',
+    'Cook Time': '',
+    Instructions: '',
     tags: '',
-    servingSize: '',
+    'Serving Size': '',
+    'Backend Ingredients': []
   });
 
   const searchRef = useRef('');
@@ -21,14 +22,14 @@ const AddRecipe = () => {
   const addRecipe = async (e) => {
     e.preventDefault();
 
-    const isValidServingSize = /^[0-99]$/.test(formData.servingSize);
+    const isValidServingSize = /^[0-99]$/.test(formData['Serving Size']);
 
     if (
-      formData.recipeTitle === '' ||
-      formData.cookTime === '' ||
-      formData.ingredients === '' ||
-      formData.servingSize === '' ||
-      formData.instructions === ''
+      formData.name === '' ||
+      formData['Cook Time'] === '' ||
+      formData.Ingredients === '' ||
+      formData['Serving Size'] === '' ||
+      formData.Instructions === ''
     ) {
       setError('One or more required fields are empty, please try again.');
       return;
@@ -40,34 +41,18 @@ const AddRecipe = () => {
     }
 
     try { 
-        const querySnapshot = await getDocs(recipes)
-        querySnapshot.forEach(async (queryDocumentSnapshot) => {
-            try {
-              // Get the reference to the document
-              const documentRef = doc(db, 'recipes', queryDocumentSnapshot.id);
-          
-              // Add a new field (e.g., 'newField') with a specific value (e.g., 'defaultValue')
-              await updateDoc(documentRef, {
-                newField: deleteField()
-              });
-          
-              console.log('Document successfully updated with new field!');
-            } catch (error) {
-              console.error('Error updating document: ', error);
-            }
-          });
-
       const docRef = await addDoc(collection(db, 'recipes'), {
         ...formData,
       });
 
       setFormData({
-        recipeTitle: '',
-        ingredients: '',
-        cookTime: '',
-        instructions: '',
+        name: '',
+        Ingredients: '',
+        ['Backend Ingredients']: [],
+        ['Cook Time']: '',
+        Instructions: '',
         tags: '',
-        servingSize: '',
+        ['Serving Size']: '',
       });
 
       setError('');
@@ -94,8 +79,8 @@ const AddRecipe = () => {
                     name="recipeTitle"
                     type="text"
                     placeholder="Recipe title"
-                    value={formData.recipeTitle}
-                    onChange={(e) => setFormData({ ...formData, recipeTitle: e.target.value })}
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     autoComplete="off"
                   />
                 </Form.Group>
@@ -105,8 +90,8 @@ const AddRecipe = () => {
                     name="ingredients"
                     type="text"
                     placeholder="List of ingredients (,)"
-                    value={formData.ingredients}
-                    onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
+                    value={formData.Ingredients}
+                    onChange={(e) => setFormData({ ...formData, Ingredients: e.target.value })}
                     autoComplete="off"
                   />
                 </Form.Group>
@@ -116,8 +101,8 @@ const AddRecipe = () => {
                     name="cookTime"
                     type="text"
                     placeholder="(e.g.2h30m)"
-                    value={formData.cookTime}
-                    onChange={(e) => setFormData({ ...formData, cookTime: e.target.value })}
+                    value={formData['Cook Time']}
+                    onChange={(e) => setFormData({ ...formData, 'Cook Time': e.target.value })}
                     autoComplete="off"
                   />
                 </Form.Group>
@@ -126,9 +111,9 @@ const AddRecipe = () => {
                   <Form.Control
                     name="servingSize"
                     type="text"
-                    placeholder="Serving size"
-                    value={formData.servingSize}
-                    onChange={(e) => setFormData({ ...formData, servingSize: e.target.value })}
+                    placeholder="Serving Size"
+                    value={formData['Serving Size']}
+                    onChange={(e) => setFormData({ ...formData, 'Serving Size': e.target.value })}
                     autoComplete="off"
                   />
                 </Form.Group>
@@ -138,8 +123,8 @@ const AddRecipe = () => {
                     name="instructions"
                     type="text"
                     placeholder="Instructions"
-                    value={formData.instructions}
-                    onChange={(e) => setFormData({ ...formData, instructions: e.target.value })}
+                    value={formData.Instructions}
+                    onChange={(e) => setFormData({ ...formData, Instructions: e.target.value })}
                     autoComplete="off"
                   />
                 </Form.Group>
