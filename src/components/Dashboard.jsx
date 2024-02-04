@@ -28,7 +28,9 @@ export default function Dashboard() {
       useEffect(() => {
         const fetchData = async () => {
           const newData = await fetchRecipes();
-          setRecipes(newData);
+          const shuffledRecipes = newData.sort(() => 0.5 - Math.random());
+          const slicedRecipes = shuffledRecipes.slice(0, 16);
+          setRecipes(slicedRecipes);
         };
     
         fetchData();
