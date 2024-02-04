@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { db } from '../firebase';
-import { collection, addDoc, getDocs, deleteDoc, query, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, updateDoc, query, where, doc, deleteField } from 'firebase/firestore';
 import { Button, Form, Card, Alert, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -40,16 +40,22 @@ const AddRecipe = () => {
     }
 
     try { 
-        const q = query(recipes, where('ingredients', '!=', null))
-        const querySnapshot = await getDocs(q)
-        querySnapshot.forEach(async (doc) => {
+        const querySnapshot = await getDocs(recipes)
+        querySnapshot.forEach(async (queryDocumentSnapshot) => {
             try {
-                await deleteDoc(doc.ref)
-                console.log('document deleted')
+              // Get the reference to the document
+              const documentRef = doc(db, 'recipes', queryDocumentSnapshot.id);
+          
+              // Add a new field (e.g., 'newField') with a specific value (e.g., 'defaultValue')
+              await updateDoc(documentRef, {
+                newField: deleteField()
+              });
+          
+              console.log('Document successfully updated with new field!');
             } catch (error) {
-                console.error('error deleting document: ', error)
+              console.error('Error updating document: ', error);
             }
-        })
+          });
 
       const docRef = await addDoc(collection(db, 'recipes'), {
         ...formData,

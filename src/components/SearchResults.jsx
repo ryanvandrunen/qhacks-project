@@ -9,14 +9,10 @@ export default function SearchResults() {
     const [searchResults, setSearchResults] = useState()
     const recipes = collection(db, 'recipes')
 
-    const handleSearchSubmit = async () => {
-
-    }
-
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const q = query(recipes, where('recipeTitle', '==', searchQuery))
+            const q = query(recipes, where('Backend Ingredients', 'array-contains', searchQuery))
             const querySnapshot = await getDocs(q)
             const data = querySnapshot.docs.map((doc) => doc.data());
             setSearchResults(data);
@@ -24,7 +20,6 @@ export default function SearchResults() {
             console.error('Error fetching data from Firestore:', error);
           }
         };
-        console.log(searchQuery)
         if (searchQuery) {
           fetchData();
         }
@@ -47,12 +42,13 @@ export default function SearchResults() {
         searchResults.map((recipe) => (
           <RecipeCard
             key={recipe.id}
-            recipeTitle={recipe.recipeTitle}
-            cookTime={recipe.cookTime}
-            ingredients={recipe.ingredients}
-            instructions={recipe.instructions}
-            servingSize={recipe.servingSize}
+            recipeTitle={recipe.name}
+            cookTime={recipe['Cook Time']}
+            ingredients={recipe.Ingredients}
+            instructions={recipe.Instructions}
+            servingSize={recipe['Serving Size']}
             tags={recipe.tags}
+            img={recipe['Image Name']}
           />
         ))
       ) : (

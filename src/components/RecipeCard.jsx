@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
-import myImage from './FoodImages/-burnt-carrots-and-parsnips-56390131.jpg';
+// import myImage from './FoodImages/-burnt-carrots-and-parsnips-56390131.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark as bookmarkLight } from '@fortawesome/free-regular-svg-icons';
 import { faBookmark as bookmarkSolid } from '@fortawesome/free-solid-svg-icons'

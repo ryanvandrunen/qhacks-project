@@ -118,7 +118,7 @@ export default function Dashboard() {
         recipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}
-            recipeTitle={recipe.id}
+            recipeTitle={recipe.name}
             cookTime={recipe['Cook Time']}
             ingredients={recipe.Ingredients}
             instructions={recipe.Instructions}
