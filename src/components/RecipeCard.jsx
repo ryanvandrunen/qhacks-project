@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Modal, Button, Badge } from 'react-bootstrap';
+import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
 
 export default function RecipeCard(props) {
   const [modalContent, setModalContent] = useState({
@@ -30,22 +30,22 @@ export default function RecipeCard(props) {
   };
 
   return (
-    <div>
-      <Card className="card mb-4" style={{ width: '15vw', borderRadius: '15px' }}>
-        <Card.Body key={props.id} className="align-items-center gap-4">
-          <Card.Title className="mb-3 recipeName">{props.recipeTitle}</Card.Title>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Card className="card mb-4 h-100" style={{ width: '15vw', borderRadius: '15px' }}>
+        <Card.Body key={props.id} className="d-flex flex-column gap-2">
+          <Card.Title className="recipeName">{props.recipeTitle}</Card.Title>
           <Card.Text className="cookTime">Cook Time: {props.cookTime}</Card.Text>
           <Card.Text className="servingSize">Serving Size: {props.servingSize}</Card.Text>
           {props.tags && props.tags.split(',').length > 0 && (
-            <div className="mb-3 d-flex gap-2">
-              {props.tags.split(',').map((tag) => (
-                <Badge key={tag} bg="dark">
-                  {tag.trim()}
-                </Badge>
-              ))}
-            </div>
+            <div className="mb-2 d-flex flex-wrap gap-2">
+            {props.tags.split(',').map((tag) => (
+              <Badge key={tag} bg="dark">
+                {tag.trim()}
+              </Badge>
+            ))}
+          </div>
           )}
-          <Button class="btn btn-primary" onClick={handleModalOpen}>
+          <Button className="btn btn-primary mt-auto" onClick={handleModalOpen}>
             More Information
           </Button>
         </Card.Body>
@@ -56,7 +56,7 @@ export default function RecipeCard(props) {
           <Modal.Title>{modalContent.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <h6>Ingredients:</h6>
+          <h6>Ingredients:</h6>
           <p className="card-text mb-3">{modalContent.ingredients}</p>
           <h6>Cooking time:</h6>
           <p className="card-text">{modalContent.cookTime}</p>
@@ -66,11 +66,11 @@ export default function RecipeCard(props) {
           <p className="card-text">{modalContent.instructions}</p>
           <div className="d-flex gap-2">
             {props.tags.split(',').map((tag) => (
-                <Badge key={tag} bg="dark">
-                  {tag.trim()}
-                </Badge>
-              ))}
-            </div>
+              <Badge key={tag} bg="dark">
+                {tag.trim()}
+              </Badge>
+            ))}
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleModalClose}>

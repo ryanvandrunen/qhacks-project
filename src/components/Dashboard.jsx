@@ -28,7 +28,6 @@ export default function Dashboard() {
         const fetchData = async () => {
           const newData = await fetchRecipes();
           setRecipes(newData);
-          console.log(newData)
         };
     
         fetchData();
@@ -38,7 +37,7 @@ export default function Dashboard() {
         <>            
             <h1 className="Header text-center mt-4">Featured Recipes</h1>
 
-            <Container className="d-flex gap-3 mt-4" style={{ minHeight: "10vh" }}>
+            <Container className="d-flex flex-wrap gap-3 mt-4" style={{ minHeight: "10vh", marginLeft: '2vw' }}>
             {recipes ? (
         recipes.map((recipe) => (
           <RecipeCard
