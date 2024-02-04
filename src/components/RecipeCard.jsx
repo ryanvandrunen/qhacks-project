@@ -100,7 +100,7 @@ export default function RecipeCard(props) {
               )}
             </div>
           )}
-          <Button className="btn btn-primary mt-auto" onClick={handleModalOpen}>
+          <Button className="btn btn-secondary mt-auto" onClick={handleModalOpen}>
             View Recipe
           </Button>
         </Card.Body>
