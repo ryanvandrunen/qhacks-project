@@ -45,17 +45,18 @@ export default function Dashboard() {
         <>            
             <h1 className="Header text-center mt-4">Featured Recipes</h1>
 
-            <Container className="d-flex flex-wrap gap-3 mt-4 justify-content-center" style={{ minHeight: "10vh", marginLeft: 'auto', marginRight:'auto', background: '#c4fdff' }}>
+            <Container className="d-flex flex-wrap gap-3 mt-4 justify-content-center" style={{ minHeight: "10vh", marginLeft: 'auto', marginRight:'auto' }}>
             {recipes ? (
         recipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}
-            recipeTitle={recipe.recipeTitle}
-            cookTime={recipe.cookTime}
-            ingredients={recipe.ingredients}
-            instructions={recipe.instructions}
-            servingSize={recipe.servingSize}
+            recipeTitle={recipe.id}
+            cookTime={recipe['Cook Time']}
+            ingredients={recipe.Ingredients}
+            instructions={recipe.Instructions}
+            servingSize={recipe['Serving Size']}
             tags={recipe.tags}
+            img={recipe['Image Name']}
           />
         ))
       ) : (
