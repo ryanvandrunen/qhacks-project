@@ -46,7 +46,7 @@ export default function RecipeCard(props) {
   const handleModalOpen = () => {
     setModalContent({
       ingredients: props.ingredients,
-      cookTime: props.cookTime,
+      cookTime: props.CookTime,
       servingSize: props.servingSize,
       title: props.recipeTitle,
       tags: props.tags,
