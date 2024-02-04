@@ -11,8 +11,7 @@ export default function Dashboard() {
     const [error, setError] = useState('')
     const { currentUser, logout } = useAuth()
     const navigate = useNavigate()
-    const [recipes, setRecipes] = useState()
-    const [postalCode, setPostalCode] = useState()
+    const [recipes, setRecipes] = useState([])
 
     const fetchRecipes = async () => {
         try {
@@ -27,14 +26,20 @@ export default function Dashboard() {
 
       useEffect(() => {
         const fetchData = async () => {
-          const newData = await fetchRecipes();
-          const shuffledRecipes = newData.sort(() => 0.5 - Math.random());
-          const slicedRecipes = shuffledRecipes.slice(0, 16);
-          setRecipes(slicedRecipes);
+          if (recipes.length === 0) {
+            try {
+              const querySnapshot = await getDocs(collection(db, "recipes"));
+              const newData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+              const slicedRecipes = newData.slice(0, 16);
+              setRecipes(slicedRecipes);
+            } catch (error) {
+              console.error('Error fetching recipes:', error);
+            }
+          }
         };
-    
+      
         fetchData();
-      }, []); 
+      }, []);  
 
     return (
         <>            

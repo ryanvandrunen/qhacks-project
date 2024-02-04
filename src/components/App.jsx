@@ -1,6 +1,5 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Signup from "./Signup"
-import { Container } from 'react-bootstrap'
 import { AuthProvider } from "../contexts/AuthContext"  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Dashboard from "./Dashboard"
@@ -12,8 +11,29 @@ import AddRecipe from "./AddRecipe"
 import NavComponent from "./NavComponent"
 import Location from "./Location"
 import SearchResults from "./SearchResults"
+import { db } from "../firebase"
+import { collection, query, where, getDocs } from "firebase/firestore"
 
 function App() {
+  const [hasFunctionRun, setHasFunctionRun] = useState(false)
+  const [recipes, setRecipes] = useState([])
+  
+  useEffect(() => {
+    // Your function to run once
+    if (!hasFunctionRun) {
+      const fetchData = async () => {
+        const querySnapshot = await getDocs(collection(db, "recipes"));
+        const newData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const shuffledRecipes = newData.sort(() => 0.5 - Math.random());
+        const slicedRecipes = shuffledRecipes.slice(0, 16);
+        setRecipes(slicedRecipes);
+        setHasFunctionRun(true);
+        console.log(recipes)
+      }
+      fetchData()
+    }
+  }, [hasFunctionRun]);
+
   return (
           <Router>
             <AuthProvider>
@@ -28,7 +48,7 @@ function App() {
                 <Route path="/" element={
                   <PrivateRoute>
                       <NavComponent/>
-                      <Dashboard />
+                      <Dashboard {...recipes}/>
                   </PrivateRoute>
                   }
                 />

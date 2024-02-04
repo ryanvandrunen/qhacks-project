@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
 import myImage from './FoodImages/-burnt-carrots-and-parsnips-56390131.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 
 const tagContainerStyle = {
   display: 'flex',
@@ -64,11 +66,13 @@ export default function RecipeCard(props) {
       <Card className="card mb-4 h-100" style={{ width: '15vw', borderRadius: '15px' }}>
         <Card.Img variant="top" src={myImage} alt={props.recipeTitle} style={{ borderRadius: '15px 15px 0 0', objectFit: 'cover', height: '10vw' }} />
         <Card.Body key={props.id} className="d-flex flex-column gap-2">
-          <Card.Title className="recipeName">{props.recipeTitle}</Card.Title>
+        <Card.Title className="float-right">
+          {props.recipeTitle}
+          <FontAwesomeIcon icon={faBookmark} className="justify-content-end" />
+        </Card.Title>
           <Card.Text className="cookTime">Cook Time: {props.cookTime}</Card.Text>
           <Card.Text className="servingSize">Serving Size: {props.servingSize}</Card.Text>
           {props.tags && props.tags.split(',').length > 0 && (
-            // <div className="d-flex gap-2">
             <div style={tagContainerStyle}>
               {props.tags.split(',').slice(0, 5).map((tag, index) => (
                 <Badge key={tag} bg="dark">
