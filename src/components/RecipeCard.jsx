@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Modal, Button, Badge, Carousel } from 'react-bootstrap';
-import myImage from '../../Food Images/-burnt-carrots-and-parsnips-56390131.jpg'
+import myImage from './FoodImages/-burnt-carrots-and-parsnips-56390131.jpg';
 
 const tagContainerStyle = {
   display: 'flex',
