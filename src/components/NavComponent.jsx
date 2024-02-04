@@ -28,6 +28,7 @@
 //   )
 // }
 
+
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -37,9 +38,12 @@ export default function NavComponent() {
   const { currentUser } = useAuth();
 
   return (
-    <Navbar expand="lg" className="navbar" style={{ background: 'linear-gradient(45deg, #FFD700, #FF6347)', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
+    <Navbar expand="lg" className="navbar" style={{ background: '#fa853c', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
       <Container>
-        <Navbar.Brand style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff' }}>Recipe Website</Navbar.Brand>
+        <Navbar.Brand style={{ display: 'flex', alignItems: 'center', fontSize: '1.5rem', fontWeight: 'bold', color: '#fff' }}>
+          <img src="https://cdn-icons-png.flaticon.com/512/5540/5540650.png" alt="Logo" style={{ height: '30px', marginRight: '10px' }} />
+          Recipe Website
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
           <Nav className="me-auto">
