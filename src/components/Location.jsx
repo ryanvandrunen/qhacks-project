@@ -2,14 +2,14 @@
 import { db } from '../firebase';
 import React, { useState } from 'react';
 import { FormControl, Button } from 'react-bootstrap';
-import { fetchDataFromWebpage } from './postal';
+// import { fetchDataFromWebpage } from './postal';
 
 export default function GetPostalCode() {
   const [postalCode, setPostalCode] = useState('');
 
-  const handlePostalCodeSubmit = async () => {
-    const data = fetchDataFromWebpage(postalCode, 'Walmart')
-  }
+  // const handlePostalCodeSubmit = async () => {
+  //   const data = fetchDataFromWebpage(postalCode, 'Walmart')
+  // }
 
 
   return (
@@ -24,7 +24,7 @@ export default function GetPostalCode() {
         <Button
           type="button"
           className="btn-warning"
-          onClick={handlePostalCodeSubmit}
+          // onClick={handlePostalCodeSubmit}
         >
           Submit
         </Button>
